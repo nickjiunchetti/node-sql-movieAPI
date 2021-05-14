@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  movieserver:
+    image: node:12-alpine
+    command: sh -c "yarn install && yarn run dev"
+    ports:
+      - 3000:3000
+    working_dir: /nickjiunchetti-node-rest-api
+    volumes:
+      - ./:/nickjiunchetti-node-rest-api
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_DB: movieapi
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - movieapi-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: movieapi
+
+volumes:
+  movieapi-mysql-data:

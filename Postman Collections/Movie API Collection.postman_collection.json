@@ -1,0 +1,1388 @@
+{
+	"info": {
+		"_postman_id": "e591a17f-c733-438e-b502-825eb6496243",
+		"name": "Movie API Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "User Sign Up",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const number = Date.now()\r",
+									"pm.collectionVariables.set(\"Nickname\", `user_test_${number}`)\r",
+									"pm.collectionVariables.set(\"E-mail\", `user_test_${number}@gmail.com`)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull SignUp', () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nickname\": \"{{Nickname}}\",\r\n    \"email\": \"{{E-mail}}\",\r\n    \"password\":\"test\",\r\n    \"first_name\": \"tes\",\r\n    \"last_name\": \"te\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerUrl}}/user/register",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Sign In",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = JSON.parse(responseBody)\r",
+									"pm.collectionVariables.set(\"AuthToken\", jsonData.token)\r",
+									"\r",
+									"pm.test('Sucessfull SignIn', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nickname\":\"\",\r\n    \"email\":\"{{E-mail}}\",\r\n    \"password\":\"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerUrl}}/user/login",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Update User', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const number = Date.now()\r",
+									"pm.collectionVariables.set(\"Nickname\", `user_test_${number}`)\r",
+									"pm.collectionVariables.set(\"E-mail\", `user_test_${number}@gmail.com`)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nickname\": \"{{Nickname}}\",\r\n    \"email\": \"{{E-mail}}\",\r\n    \"password\":\"\",\r\n    \"first_name\":\"\",\r\n    \"last_name\":\"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerUrl}}/user/update",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"user",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"AuthToken\", \"\")\r",
+									"\r",
+									"pm.test('Sucessfull Delete User', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/user/delete",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"user",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Evaluation",
+			"item": [
+				{
+					"name": "Add Evaluation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Create Movie Evaluation', () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"imdbID\": \"\",\r\n    \"Title\": \"star\",\r\n    \"stars\": \"0\",\r\n    \"score\": \"5\",\r\n    \"restricted\": true,\r\n    \"comment\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Duis ac gravida quam, in dapibus felis.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerUrl}}/evaluation",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"evaluation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Evaluations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Get User Evaluations', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/evaluation/user",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"evaluation",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Movie Evaluations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Get Movie Evaluations', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/evaluation/movie?imdbID=&Title=star",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"evaluation",
+								"movie"
+							],
+							"query": [
+								{
+									"key": "imdbID",
+									"value": ""
+								},
+								{
+									"key": "Title",
+									"value": "star"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Evaluation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Update User Evaluation', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"imdbID\": \"\",\r\n    \"Title\": \"star\",\r\n    \"stars\": \"5\",\r\n    \"score\": \"10\",\r\n    \"restricted\": false,\r\n    \"comment\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerUrl}}/evaluation",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"evaluation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Evaluation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Delete User Evaluation', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/evaluation?imdbID=&Title=star",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"evaluation"
+							],
+							"query": [
+								{
+									"key": "imdbID",
+									"value": ""
+								},
+								{
+									"key": "Title",
+									"value": "star"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "WishList",
+			"item": [
+				{
+					"name": "Create WishList",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Create Wishlist', () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"wishlistName\":\"test_list\",\r\n    \"restricted\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerUrl}}/wishlist",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"wishlist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Movie to WishList",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Add Movie to Wishlist', () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"wishlistId\": \"1\",\r\n    \"imdbID\": \"\",\r\n    \"Title\": \"star\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerUrl}}/wishlist/wish",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"wishlist",
+								"wish"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get WishList",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Get Wishlist', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/wishlist/?wishListId=&wishlistName=test",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"wishlist",
+								""
+							],
+							"query": [
+								{
+									"key": "wishListId",
+									"value": "",
+									"description": "required"
+								},
+								{
+									"key": "wishlistName",
+									"value": "test"
+								},
+								{
+									"key": "filterBy",
+									"value": "Genre",
+									"disabled": true
+								},
+								{
+									"key": "filterParam",
+									"value": "Adventure",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Wishlists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Get User Wishlists', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/wishlist/user?wishlistName=",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"wishlist",
+								"user"
+							],
+							"query": [
+								{
+									"key": "wishlistName",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Wishlists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Get All Wishlists', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/wishlist/all?wishlistName=",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"wishlist",
+								"all"
+							],
+							"query": [
+								{
+									"key": "wishlistName",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Movie from Wishlist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Delete Movie from Wishlists', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/wishlist/wish?wishlistId=1&imdbID&Title=star",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"wishlist",
+								"wish"
+							],
+							"query": [
+								{
+									"key": "wishlistId",
+									"value": "1"
+								},
+								{
+									"key": "imdbID",
+									"value": null
+								},
+								{
+									"key": "Title",
+									"value": "star"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete WishList",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Delete Wishlist', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/wishlist/?wishlistId=1",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"wishlist",
+								""
+							],
+							"query": [
+								{
+									"key": "wishlistId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Watchlist",
+			"item": [
+				{
+					"name": "Add Watchlist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Create Watchlist', () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"watchlistName\": \"Me indique um filme sci-fi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerUrl}}/watch",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"watch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Movie to Watchlist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Add Movie to Watchlist', () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"watchlistId\": \"1\",\r\n    \"imdbId\": \"\",\r\n    \"Title\": \"star\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerUrl}}/watch/movie",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"watch",
+								"movie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Watchlists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Get User Watchlists', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/watch/user?watchlistName=",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"watch",
+								"user"
+							],
+							"query": [
+								{
+									"key": "watchlistName",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Watchlists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Get All Watchlists', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/watch/all?watchlistName=",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"watch",
+								"all"
+							],
+							"query": [
+								{
+									"key": "watchlistName",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Movie from Watchlist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Delete Movie from Watchlist', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/watch/movie?watchlistId=1&imdbID&Title=star",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"watch",
+								"movie"
+							],
+							"query": [
+								{
+									"key": "watchlistId",
+									"value": "1"
+								},
+								{
+									"key": "imdbID",
+									"value": null
+								},
+								{
+									"key": "Title",
+									"value": "star"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Watchlist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Delete Watchlist', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/watch?watchlistId=1",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"watch"
+							],
+							"query": [
+								{
+									"key": "watchlistId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Group",
+			"item": [
+				{
+					"name": "Create Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Create Group', () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"groupName\":\"test_group\",\r\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Duis ac gravida quam, in dapibus felis.\",\r\n    \"restricted\": false,\r\n    \"users\": [ 1, 2, 3]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerUrl}}/group",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add User to Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Failed Add User to Group', () => {\r",
+									"    pm.response.to.have.status(406)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"groupId\": 1,\r\n    \"groupUserId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerUrl}}/group/user",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"group",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Post to Group",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Successfull Add Post to Group', () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"groupId\":\"1\",\r\n    \"text\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Duis ac gravida quam, in dapibus felis.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerUrl}}/group/post",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"group",
+								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Groups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Get User Groups', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/group/user?groupName=test_group",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"group",
+								"user"
+							],
+							"query": [
+								{
+									"key": "groupName",
+									"value": "test_group"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Groups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Get All Groups', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/group/all?groupName",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"group",
+								"all"
+							],
+							"query": [
+								{
+									"key": "groupName",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Update Group', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"groupId\": \"1\",\r\n    \"groupName\": \"group2\",\r\n    \"description\": \"\",\r\n    \"restricted\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerUrl}}/group",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User from Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Delete User from Group', () => {\r",
+									"    pm.response.to.have.status(406)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/group/user?groupId=1&groupUserId=1",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"group",
+								"user"
+							],
+							"query": [
+								{
+									"key": "groupId",
+									"value": "1"
+								},
+								{
+									"key": "groupUserId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Post from Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Delete Post from Group', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/group/post?postId=1",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"group",
+								"post"
+							],
+							"query": [
+								{
+									"key": "postId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Delete Group', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/group?groupId=1",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"group"
+							],
+							"query": [
+								{
+									"key": "groupId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movie",
+			"item": [
+				{
+					"name": "Get Movie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Sucessfull Get Movie', () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ServerUrl}}/movie?imdbID=&Title=star",
+							"host": [
+								"{{ServerUrl}}"
+							],
+							"path": [
+								"movie"
+							],
+							"query": [
+								{
+									"key": "imdbID",
+									"value": ""
+								},
+								{
+									"key": "Title",
+									"value": "star"
+								}
+							]
+						},
+						"description": "Get Movie from IMDB"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{AuthToken}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Authorization",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "AuthToken",
+			"value": ""
+		},
+		{
+			"key": "ServerUrl",
+			"value": "localhost:3000"
+		},
+		{
+			"key": "Nickname",
+			"value": ""
+		},
+		{
+			"key": "E-mail",
+			"value": ""
+		}
+	]
+}
